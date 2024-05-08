@@ -1,0 +1,37 @@
+plugins {
+    id 'java'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src'
+        }
+    }
+}
+
+tasks.withType(Jar) {
+    destinationDir = file("$rootDir/lib")
+}
+
+task submit(type: Zip) {
+    from("src") {
+        include "**/*.java"
+        into "src"
+    }
+
+    from("report") {
+        include "**/*.pdf"
+        into "report"
+    }
+
+    from(".") {
+        include "build.gradle"
+        into "."
+        }
+    archiveFileName = "submit.zip"
+    destinationDirectory = file("$rootDir")
+
+}
+
+defaultTasks 'clean', 'assemble'
